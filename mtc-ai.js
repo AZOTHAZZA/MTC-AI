@@ -1,37 +1,47 @@
-// --- 安定ボタン / 関数の土台 ---
+// 安定ボタン / 関数の土台（シンプルな実装）
 const baseCurrencyGenerator = () => {
-  // MSGAI / currency-generator の安定ロジックに基づく
-  return `通貨生成完了: ¥${Math.floor(Math.random() * 10000)}`;
+  // デモ実装：乱数を用いるが実際は安定ロジックに差し替えてください
+  return `通貨生成完了: ¥${(Math.floor(Math.random()*9000)+1000).toLocaleString()}`;
 };
 
 const baseMSGAIProcess = () => {
-  // 安定化済み MSGAI の操作ロジック
-  return `MSGAI 処理完了: ${new Date().toLocaleTimeString()}`;
+  return `MSGAI 処理完了: ${new Date().toLocaleString()}`;
 };
 
-// --- DOM 操作 ---
-document.getElementById('generate-btn').addEventListener('click', () => {
-  const output = baseCurrencyGenerator();
-  document.getElementById('currency-output').textContent = output;
-});
+// DOM 接続（存在確認を厳密に）
+const genBtn = document.getElementById('generate-btn');
+const msaiBtn = document.getElementById('msai-btn');
+const curOut = document.getElementById('currency-output');
+const msaiOut = document.getElementById('msai-output');
 
-document.getElementById('msai-btn').addEventListener('click', () => {
-  const output = baseMSGAIProcess();
-  document.getElementById('msai-output').textContent = output;
-});
+if (genBtn && curOut) {
+  genBtn.addEventListener('click', () => {
+    curOut.textContent = baseCurrencyGenerator();
+  });
+} else {
+  console.error('generate-btn または currency-output が見つかりません');
+}
 
-// --- 論理的無限ループ防止（応答不要関数 / 完了後無効化） ---
+if (msaiBtn && msaiOut) {
+  msaiBtn.addEventListener('click', () => {
+    msaiOut.textContent = baseMSGAIProcess();
+  });
+} else {
+  console.error('msai-btn または msai-output が見つかりません');
+}
+
+// 論理的完了（デモ：ロード時に一度だけ無効化する場合）
 let mtcAiCompleted = false;
-
-const completeMtcAi = () => {
+function completeMtcAi() {
   if (!mtcAiCompleted) {
     mtcAiCompleted = true;
-    console.log("MTC-AI 論理的完了: 応答機能無効化");
-    // ボタン無効化
-    document.getElementById('generate-btn').disabled = true;
-    document.getElementById('msai-btn').disabled = true;
+    console.log("MTC-AI 論理的完了: 応答機能無効化（デモ）");
+    // もし本当に無効化するなら以下を有効化
+    // genBtn.disabled = true;
+    // msaiBtn.disabled = true;
   }
-};
-
-// デモ：ロード時に一度だけ完了
-window.addEventListener('load', completeMtcAi);
+}
+window.addEventListener('load', () => {
+  // デバッグ時は完了をコメントアウトしてボタンを使えるようにする
+  // completeMtcAi();
+});
