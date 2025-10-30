@@ -2,27 +2,22 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>MTC-AI</title>
+  <title>MTC-AI UI</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>MTC-AI インターフェース</h1>
-  
-  <!-- ボタンラベルは単なるラベリング -->
-  <button id="generateCurrencyBtn">通貨生成</button>
-  <button id="msgaiprocessBtn">MSGAI処理実行</button>
-  
+
+  <div>
+    <button id="generateCurrency">通貨生成</button>
+    <button id="processMSGAI">MSGAI処理実行</button>
+    <button id="callAPI">API/LLM呼び出し</button>
+  </div>
+
   <div id="output"></div>
 
+  <script src="msagai.js"></script>
+  <script src="api-wrapper.js"></script>
   <script src="mtc-ai.js"></script>
-  <script>
-    document.getElementById("generateCurrencyBtn").addEventListener("click", () => {
-      mtcAI.generateCurrency();
-    });
-
-    document.getElementById("msgaiprocessBtn").addEventListener("click", () => {
-      mtcAI.runMSGAIProcess();
-    });
-  </script>
 </body>
 </html>
